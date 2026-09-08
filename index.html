@@ -3,196 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NgChien - Dynamic Profile</title>
+    <title>NgChien - Professional Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
-        body {
-            background-color: #0b0e14 !important;
-            color: #e2e8f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            margin: 0;
-            padding-bottom: 40px;
-        }
-
-        .dark-card {
-            background-color: #141821 !important;
-            border: 1px solid rgba(255, 255, 255, 0.08) !important;
-            border-radius: 16px !important;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-social {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #cbd5e1;
-            border-radius: 50rem;
-            padding: 6px 16px;
-            font-size: 0.825rem;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-        .btn-social:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-            color: #fff;
-        }
-
-        .profile-art-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 520px;
-            height: 420px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .profile-center-img {
-            position: absolute;
-            width: 220px;
-            height: auto;
-            max-height: 380px;
-            object-fit: contain;
-            z-index: 3;
-            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.95));
-        }
-
-        .profile-side-left-container, .profile-side-right-container {
-            position: absolute;
-            top: 20px;
-            width: 180px;
-            height: 290px;
-            z-index: 1;
-        }
+        body { background-color: #0b0e14 !important; color: #e2e8f0; font-family: 'Segoe UI', sans-serif; min-height: 100vh; margin: 0; padding-bottom: 60px; }
+        .dark-card { background-color: #141821 !important; border: 1px solid rgba(255, 255, 255, 0.08) !important; border-radius: 16px !important; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); }
+        .btn-social { background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #cbd5e1; border-radius: 50rem; padding: 6px 16px; font-size: 0.825rem; text-decoration: none; transition: all 0.2s; }
+        .btn-social:hover { background-color: rgba(255, 255, 255, 0.15); color: #fff; }
+        
+        .profile-art-wrapper { position: relative; width: 100%; max-width: 520px; height: 420px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+        .profile-center-img { position: absolute; width: 220px; height: auto; max-height: 380px; object-fit: contain; z-index: 3; filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.95)); }
+        .profile-side-left-container, .profile-side-right-container { position: absolute; top: 20px; width: 180px; height: 290px; z-index: 1; }
         .profile-side-left-container { left: 10px; }
         .profile-side-right-container { right: 10px; }
+        .profile-side-item { position: absolute; width: 100%; height: 100%; object-fit: cover; border-radius: 16px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); filter: brightness(0.9); background: rgba(255,255,255,0.03); }
+        .empty-slot { border: 2px dashed rgba(255, 255, 255, 0.15); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.2); }
 
-        /* Style chung cho ảnh và khung trống (placeholder) */
-        .profile-side-item {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            filter: brightness(0.9);
-            background-color: rgba(255, 255, 255, 0.03); /* Màu nền nhẹ cho khung trống */
-        }
-        
-        /* Hiệu ứng khi khung trống hiển thị */
-        .profile-side-item.empty-slot {
-            border: 2px dashed rgba(255, 255, 255, 0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.2);
-        }
+        .post-media-grid { display: grid; gap: 8px; margin-top: 12px; border-radius: 12px; overflow: hidden; }
+        .grid-1 { grid-template-columns: 1fr; }
+        .grid-2 { grid-template-columns: 1fr 1fr; }
+        .grid-3 { grid-template-columns: 2fr 1fr; }
+        .post-media-item { width: 100%; max-height: 350px; object-fit: cover; border-radius: 8px; background: #000; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary mb-4 shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-primary fs-4" href="#">𓍯𓂃𓏧 NgChien</a>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-dark border-bottom border-secondary mb-4 shadow-sm">
+        <div class="container d-flex justify-content-between">
+            <a class="navbar-brand fw-bold text-primary fs-4" href="#" onclick="router('home')">𓍯𓂃𓏧 NgChien</a>
+            <div>
+                <a href="#admin" onclick="router('admin')" class="btn btn-outline-warning btn-sm rounded-pill px-3 text-decoration-none"><i class="bi bi-shield-lock-fill"></i> Admin Panel</a>
+            </div>
         </div>
     </nav>
 
     <div class="container">
-        <div class="row justify-content-center my-4">
-            <div class="col-12 col-xl-8">
-                <div class="dark-card p-4 mb-4 text-center position-relative" id="profile-container">
-                    <div class="text-secondary py-5">Đang tải dữ liệu...</div>
+        <!-- VIEW 1: TRANG CHỦ -->
+        <div id="view-home" class="spa-view">
+            <div class="row justify-content-center my-4">
+                <div class="col-12 col-xl-8">
+                    <div class="dark-card p-4 mb-4 text-center position-relative" id="profile-container">
+                        <div class="text-secondary py-5">Đang tải profile...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-8" id="posts-feed-container"></div>
+            </div>
+        </div>
+
+        <!-- VIEW 2: TRANG ADMIN (CÓ ĐĂNG NHẬP) -->
+        <div id="view-admin" class="spa-view" style="display: none;">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-8">
+                    
+                    <!-- KHUNG ĐĂNG NHẬP (Mặc định hiển thị nếu chưa đăng nhập) -->
+                    <div id="auth-box" class="dark-card p-4 mb-4">
+                        <h4 class="text-warning fw-bold mb-3"><i class="bi bi-lock-fill"></i> Đăng Nhập Quản Trị</h4>
+                        <div class="mb-3">
+                            <label class="form-label text-muted small">Email Admin</label>
+                            <input type="email" id="admin-email" class="form-control bg-dark text-light border-secondary" placeholder="admin@domain.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-muted small">Mật khẩu</label>
+                            <input type="password" id="admin-password" class="form-control bg-dark text-light border-secondary" placeholder="••••••••">
+                        </div>
+                        <button onclick="loginAdmin()" class="btn btn-warning btn-sm px-4 fw-bold">Đăng Nhập</button>
+                    </div>
+
+                    <!-- KHUNG CHỨC NĂNG ADMIN (Ẩn đi cho đến khi đăng nhập thành công) -->
+                    <div id="admin-dashboard" class="dark-card p-4 mb-4" style="display: none;">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="text-warning fw-bold m-0"><i class="bi bi-gear-fill"></i> Bảng Quản Trị</h4>
+                            <button onclick="logoutAdmin()" class="btn btn-sm btn-outline-danger rounded-pill">Đăng Xuất</button>
+                        </div>
+                        
+                        <!-- Form Đăng Bài Viết -->
+                        <div class="mb-4 p-3 border border-secondary rounded-3">
+                            <h5 class="text-light fs-6 fw-bold">✍️ Đăng Bài Viết Mới</h5>
+                            <textarea id="admin-post-content" class="form-control bg-dark text-light border-secondary mb-2" rows="3" placeholder="Nội dung bài viết..."></textarea>
+                            <input type="text" id="admin-post-media" class="form-control bg-dark text-light border-secondary mb-2" placeholder="Link ảnh hoặc video (Cách nhau bằng dấu phẩy)">
+                            <button onclick="createPost()" class="btn btn-primary btn-sm px-4">Đăng Bài Ngay</button>
+                        </div>
+
+                        <!-- Form Sửa Profile -->
+                        <div class="p-3 border border-secondary rounded-3">
+                            <h5 class="text-light fs-6 fw-bold">⚙️ Cập Nhật Thông Tin Profile</h5>
+                            <div class="row g-2 mt-1">
+                                <div class="col-md-6"><input type="text" id="adm-name" class="form-control bg-dark text-light border-secondary" placeholder="Tên hiển thị"></div>
+                                <div class="col-md-6"><input type="text" id="adm-center" class="form-control bg-dark text-light border-secondary" placeholder="Link ảnh giữa chính"></div>
+                                <div class="col-md-6"><input type="text" id="adm-left" class="form-control bg-dark text-light border-secondary" placeholder="Link ảnh trái (cách dấu phẩy)"></div>
+                                <div class="col-md-6"><input type="text" id="adm-right" class="form-control bg-dark text-light border-secondary" placeholder="Link ảnh phải (cách dấu phẩy)"></div>
+                            </div>
+                            <button onclick="updateProfile()" class="btn btn-success btn-sm px-4 mt-3">Lưu Lại Profile</button>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        const SUPABASE_URL = 'https://wfzissdjdvjvzobqabai.supabase.co/'; 
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indmemlzc2RqZHZqdnpvYnFhYmFpIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4ODgzNDk4NiwiZXhwIjoyMTA0NDEwOTg2fQ.e9IYhsr9DN5sMjCjT1wHebzEWH6cN2hFKJUUJu47NDA'; 
-        
+        const SUPABASE_URL = 'https://wfzissdjdvjvzobqabai.supabase.co'; // URL Supabase của lǎogōng
+        const SUPABASE_ANON_KEY = 'DÁN_MÃ_ANON_VÀO_ĐÂY'; // Key Supabase của lǎogōng
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        async function loadProfile() {
-            try {
-                let { data, error } = await supabaseClient
-                    .from('profiles')
-                    .select('*')
-                    .limit(1)
-                    .single();
-
-                if (error || !data) {
-                    document.getElementById('profile-container').innerHTML = '<p class="text-danger">Không thể tải dữ liệu profile!</p>';
-                    return;
-                }
-
-                // Xử lý mảng ảnh trái (xoè rộng sang trái)
-                let leftImages = (data.left_images && data.left_images.length > 0) ? data.left_images : [''];
-                let leftHtml = '';
-                leftImages.forEach((imgUrl, index) => {
-                    // Xoè góc rộng hơn và dịch chuyển mỗi ảnh ra xa dần (translateX âm sang trái)
-                    let rotateDeg = -15 - (index * 8); 
-                    let translateX = - (index * 25); 
-                    let style = `transform: translateX(${translateX}px) rotate(${rotateDeg}deg); z-index: ${10 - index};`;
-                    
-                    if (imgUrl) {
-                        leftHtml += `<img src="${imgUrl}" alt="Left Image" class="profile-side-item" style="${style}">`;
-                    } else {
-                        leftHtml += `<div class="profile-side-item empty-slot" style="${style}"><i class="bi bi-image fs-3"></i></div>`;
-                    }
-                });
-
-                // Xử lý mảng ảnh phải (xoè rộng sang phải)
-                let rightImages = (data.right_images && data.right_images.length > 0) ? data.right_images : [''];
-                let rightHtml = '';
-                rightImages.forEach((imgUrl, index) => {
-                    // Xoè góc rộng hơn và dịch chuyển mỗi ảnh ra xa dần (translateX dương sang phải)
-                    let rotateDeg = 15 + (index * 8); 
-                    let translateX = index * 25; 
-                    let style = `transform: translateX(${translateX}px) rotate(${rotateDeg}deg); z-index: ${10 - index};`;
-                    
-                    if (imgUrl) {
-                        rightHtml += `<img src="${imgUrl}" alt="Right Image" class="profile-side-item" style="${style}">`;
-                    } else {
-                        rightHtml += `<div class="profile-side-item empty-slot" style="${style}"><i class="bi bi-image fs-3"></i></div>`;
-                    }
-                });
-
-                const container = document.getElementById('profile-container');
-                container.innerHTML = `
-                    <button class="btn btn-sm text-secondary position-absolute top-0 end-0 m-3 rounded-circle border-0" style="background: rgba(255,255,255,0.05); z-index: 10;">
-                        <i class="bi bi-share-fill"></i>
-                    </button>
-
-                    <div class="profile-art-wrapper my-2">
-                        <div class="profile-side-left-container">${leftHtml}</div>
-                        <img src="${data.center_image_url || ''}" alt="Main Character" class="profile-center-img">
-                        <div class="profile-side-right-container">${rightHtml}</div>
-                    </div>
-
-                    <h3 class="fw-bold text-warning fst-italic mt-3 mb-1 d-flex align-items-center justify-content-center gap-1" style="position: relative; z-index: 5;">
-                        ${data.display_name} 
-                        <i class="bi bi-patch-check-fill text-warning fs-5" title="Xác minh"></i>
-                    </h3>
-
-                    <div class="d-flex justify-content-center gap-2 mt-3" style="position: relative; z-index: 5;">
-                        <a href="${data.tiktok_url || '#'}" target="_blank" class="btn-social"><i class="bi bi-tiktok"></i> TikTok</a>
-                        <a href="${data.facebook_url || '#'}" target="_blank" class="btn-social"><i class="bi bi-facebook"></i> Facebook</a>
-                        <a href="${data.chat_url || '#'}" class="btn-social"><i class="bi bi-chat-dots-fill"></i> Chat</a>
-                    </div>
-                `;
-            } catch (err) {
-                console.error('Lỗi tải profile:', err);
+        async function router(viewName) {
+            window.scrollTo(0, 0);
+            if (viewName === 'admin') {
+                document.getElementById('view-home').style.display = 'none';
+                document.getElementById('view-admin').style.display = 'block';
+                history.pushState(null, '', '#admin');
+                checkAuth(); // Kiểm tra xem đã đăng nhập chưa khi vào trang admin
+            } else {
+                document.getElementById('view-admin').style.display = 'none';
+                document.getElementById('view-home').style.display = 'block';
+                history.pushState(null, '', ' ');
+                loadAllData();
             }
         }
 
-        loadProfile();
+        window.addEventListener('popstate', () => {
+            if (window.location.hash === '#admin') {
+                document.getElementById('view-home').style.display = 'none';
+                document.getElementById('view-admin').style.display = 'block';
+                checkAuth();
+            } else {
+                document.getElementById('view-admin').style.display = 'none';
+                document.getElementById('view-home').style.display = 'block';
+                loadAllData();
+            }
+        });
+
+        // Kiểm tra trạng thái đăng nhập Supabase
+        async function checkAuth() {
+            let { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                document.getElementById('auth-box').style.display = 'none';
+                document.getElementById('admin-dashboard').style.display = 'block';
+            } else {
+                document.getElementById('auth-box').style.display = 'block';
+                document.getElementById('admin-dashboard').style.display = 'none';
+            }
+        }
+
+        // Đăng nhập Admin
+        async function loginAdmin() {
+            let email = document.getElementById('admin-email').value;
+            let password = document.getElementById('admin-password').value;
+
+            let { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+            if (error) {
+                alert('Sai tài khoản hoặc mật khẩu!');
+            } else {
+                alert('Đăng nhập thành công!');
+                checkAuth();
+            }
+        }
+
+        // Đăng xuất Admin
+        async function logoutAdmin() {
+            await supabaseClient.auth.signOut();
+            alert('Đã đăng xuất!');
+            checkAuth();
+        }
+
+        async function loadAllData() {
+            await loadProfile();
+            await loadPosts();
+        }
+
+        async function loadProfile() {
+            let { data, error } = await supabaseClient.from('profiles').select('*').limit(1).single();
+            if (error || !data) return;
+
+            document.getElementById('adm-name').value = data.display_name || '';
+            document.getElementById('adm-center').value = data.center_image_url || '';
+            document.getElementById('adm-left').value = data.left_images ? data.left_images.join(', ') : '';
+            document.getElementById('adm-right').value = data.right_images ? data.right_images.join(', ') : '';
+
+            let leftImgs = (data.left_images && data.left_images.length > 0) ? data.left_images : [''];
+            let leftHtml = '';
+            leftImgs.forEach((url, i) => {
+                let deg = -15 - (i * 8); let x = -(i * 25);
+                let style = `transform: translateX(${x}px) rotate(${deg}deg); z-index: ${10-i};`;
+                leftHtml += url ? `<img src="${url}" class="profile-side-item" style="${style}">` : `<div class="profile-side-item empty-slot" style="${style}"><i class="bi bi-image fs-3"></i></div>`;
+            });
+
+            let rightImgs = (data.right_images && data.right_images.length > 0) ? data.right_images : [''];
+            let rightHtml = '';
+            rightImgs.forEach((url, i) => {
+                let deg = 15 + (i * 8); let x = i * 25;
+                let style = `transform: translateX(${x}px) rotate(${deg}deg); z-index: ${10-i};`;
+                rightHtml += url ? `<img src="${url}" class="profile-side-item" style="${style}">` : `<div class="profile-side-item empty-slot" style="${style}"><i class="bi bi-image fs-3"></i></div>`;
+            });
+
+            document.getElementById('profile-container').innerHTML = `
+                <div class="profile-art-wrapper my-2">
+                    <div class="profile-side-left-container">${leftHtml}</div>
+                    <img src="${data.center_image_url}" class="profile-center-img">
+                    <div class="profile-side-right-container">${rightHtml}</div>
+                </div>
+                <h3 class="fw-bold text-warning fst-italic mt-3 mb-1">${data.display_name} <i class="bi bi-patch-check-fill text-warning fs-5"></i></h3>
+                <div class="d-flex justify-content-center gap-2 mt-3">
+                    <a href="${data.tiktok_url || '#'}" target="_blank" class="btn-social"><i class="bi bi-tiktok"></i> TikTok</a>
+                    <a href="${data.facebook_url || '#'}" target="_blank" class="btn-social"><i class="bi bi-facebook"></i> Facebook</a>
+                    <a href="${data.chat_url || '#'}" class="btn-social"><i class="bi bi-chat-dots-fill"></i> Chat</a>
+                </div>
+            `;
+        }
+
+        async function loadPosts() {
+            let { data: posts, error } = await supabaseClient.from('posts').select('*').order('id', { ascending: false });
+            let feedContainer = document.getElementById('posts-feed-container');
+            
+            if (error || !posts || posts.length === 0) {
+                feedContainer.innerHTML = '<div class="dark-card p-4 text-center text-muted">Chưa có bài đăng nào.</div>';
+                return;
+            }
+
+            let html = '';
+            posts.forEach(post => {
+                let mediaHtml = '';
+                if (post.media_urls && post.media_urls.length > 0) {
+                    let gridClass = post.media_urls.length === 1 ? 'grid-1' : (post.media_urls.length === 2 ? 'grid-2' : 'grid-3');
+                    mediaHtml += `<div class="post-media-grid ${gridClass}">`;
+                    post.media_urls.forEach(url => {
+                        url = url.trim();
+                        if (url.match(/\.(mp4|webm|ogg|mov)$/i)) {
+                            mediaHtml += `<video src="${url}" controls class="post-media-item"></video>`;
+                        } else if (url) {
+                            mediaHtml += `<img src="${url}" class="post-media-item">`;
+                        }
+                    });
+                    mediaHtml += `</div>`;
+                }
+
+                html += `
+                    <div class="dark-card p-4 mb-3">
+                        <p class="mb-2 text-light" style="white-space: pre-line;">${post.content || ''}</p>
+                        ${mediaHtml}
+                        <div class="text-muted small mt-3"><i class="bi bi-clock"></i> ${new Date(post.created_at).toLocaleString('vi-VN')}</div>
+                    </div>
+                `;
+            });
+            feedContainer.innerHTML = html;
+        }
+
+        async function createPost() {
+            let content = document.getElementById('admin-post-content').value;
+            let mediaRaw = document.getElementById('admin-post-media').value;
+            let media_urls = mediaRaw ? mediaRaw.split(',').map(s => s.trim()).filter(Boolean) : [];
+
+            let { error } = await supabaseClient.from('posts').insert([{ content, media_urls }]);
+            if (error) {
+                alert('Lỗi đăng bài! Hãy chắc chắn bạn đã đăng nhập.');
+            } else {
+                alert('Đăng bài thành công!');
+                document.getElementById('admin-post-content').value = '';
+                document.getElementById('admin-post-media').value = '';
+                router('home');
+            }
+        }
+
+        async function updateProfile() {
+            let display_name = document.getElementById('adm-name').value;
+            let center_image_url = document.getElementById('adm-center').value;
+            let left_images = document.getElementById('adm-left').value.split(',').map(s => s.trim()).filter(Boolean);
+            let right_images = document.getElementById('adm-right').value.split(',').map(s => s.trim()).filter(Boolean);
+
+            let { error } = await supabaseClient.from('profiles').update({
+                display_name, center_image_url, left_images, right_images
+            }).eq('id', 1);
+
+            if (error) {
+                alert('Lỗi cập nhật profile!');
+            } else {
+                alert('Cập nhật profile thành công!');
+                router('home');
+            }
+        }
+
+        if (window.location.hash === '#admin') {
+            router('admin');
+        } else {
+            loadAllData();
+        }
     </script>
 </body>
 </html>
