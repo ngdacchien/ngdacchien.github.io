@@ -132,27 +132,35 @@
                     return;
                 }
 
-                // Xử lý mảng ảnh trái (nếu mảng rỗng thì tự sinh 1 khung trống)
+                // Xử lý mảng ảnh trái (xoè rộng sang trái)
                 let leftImages = (data.left_images && data.left_images.length > 0) ? data.left_images : [''];
                 let leftHtml = '';
                 leftImages.forEach((imgUrl, index) => {
-                    let rotateDeg = -12 - (index * 4);
+                    // Xoè góc rộng hơn và dịch chuyển mỗi ảnh ra xa dần (translateX âm sang trái)
+                    let rotateDeg = -15 - (index * 8); 
+                    let translateX = - (index * 25); 
+                    let style = `transform: translateX(${translateX}px) rotate(${rotateDeg}deg); z-index: ${10 - index};`;
+                    
                     if (imgUrl) {
-                        leftHtml += `<img src="${imgUrl}" alt="Left Image" class="profile-side-item" style="transform: rotate(${rotateDeg}deg); z-index: ${index + 1};">`;
+                        leftHtml += `<img src="${imgUrl}" alt="Left Image" class="profile-side-item" style="${style}">`;
                     } else {
-                        leftHtml += `<div class="profile-side-item empty-slot" style="transform: rotate(${rotateDeg}deg); z-index: ${index + 1};"><i class="bi bi-image fs-3"></i></div>`;
+                        leftHtml += `<div class="profile-side-item empty-slot" style="${style}"><i class="bi bi-image fs-3"></i></div>`;
                     }
                 });
 
-                // Xử lý mảng ảnh phải (nếu mảng rỗng thì tự sinh 1 khung trống)
+                // Xử lý mảng ảnh phải (xoè rộng sang phải)
                 let rightImages = (data.right_images && data.right_images.length > 0) ? data.right_images : [''];
                 let rightHtml = '';
                 rightImages.forEach((imgUrl, index) => {
-                    let rotateDeg = 12 + (index * 4);
+                    // Xoè góc rộng hơn và dịch chuyển mỗi ảnh ra xa dần (translateX dương sang phải)
+                    let rotateDeg = 15 + (index * 8); 
+                    let translateX = index * 25; 
+                    let style = `transform: translateX(${translateX}px) rotate(${rotateDeg}deg); z-index: ${10 - index};`;
+                    
                     if (imgUrl) {
-                        rightHtml += `<img src="${imgUrl}" alt="Right Image" class="profile-side-item" style="transform: rotate(${rotateDeg}deg); z-index: ${index + 1};">`;
+                        rightHtml += `<img src="${imgUrl}" alt="Right Image" class="profile-side-item" style="${style}">`;
                     } else {
-                        rightHtml += `<div class="profile-side-item empty-slot" style="transform: rotate(${rotateDeg}deg); z-index: ${index + 1};"><i class="bi bi-image fs-3"></i></div>`;
+                        rightHtml += `<div class="profile-side-item empty-slot" style="${style}"><i class="bi bi-image fs-3"></i></div>`;
                     }
                 });
 
