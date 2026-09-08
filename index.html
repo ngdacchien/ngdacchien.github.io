@@ -1,47 +1,182 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi" class="dark">
 <head>
-<meta charset="UTF-8">
-<title>Protected Pagex</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NgChien - Dynamic Profile from Supabase</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Thư viện Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <style>
+        body {
+            background-color: #0b0e14 !important;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding-bottom: 40px;
+        }
+
+        .dark-card {
+            background-color: #141821 !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 16px !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-social {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            border-radius: 50rem;
+            padding: 6px 16px;
+            font-size: 0.825rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .btn-social:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .profile-art-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            height: 420px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Ảnh nhân vật chính ở giữa */
+        .profile-center-img {
+            position: absolute;
+            width: 220px;
+            height: auto;
+            max-height: 380px;
+            object-fit: contain;
+            z-index: 3;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.95));
+        }
+
+        /* Container chứa các ảnh trái/phải linh hoạt (có thể lặp nhiều ảnh) */
+        .profile-side-left-container, .profile-side-right-container {
+            position: absolute;
+            top: 20px;
+            width: 180px;
+            height: 290px;
+            z-index: 1;
+        }
+        .profile-side-left-container { left: 10px; }
+        .profile-side-right-container { right: 10px; }
+
+        .profile-side-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            filter: brightness(0.9);
+        }
+    </style>
 </head>
 <body>
-<script>
-function _sYccBwER(a, b) { return (a * 31 + b) % 256; }
-function _ebjhAKdR() { 
-    let _dummy = []; 
-    for(let i=0; i<20; i++) _dummy.push(_sYccBwER(i, i));
-    return _dummy;
-}
 
-(async function() {
-    try {
-        _ebjhAKdR();
-        const _wipyWmZJ = ['a8nOS96dyFUBreg6KR8FChZ9mbe3UzBYkBddjwuI', 'nh78K8suPol3gH8cyl5n5FsJFGjb9a/LE633Bcsq', 'PwPT284tnUx3zdOco8bvgFeCCZwkhE5yVQdKzk5O', 'TG5GTtbqFIwsq2jpxJRMs1d0+tq+qqqzh+Nrcj6K', 'lpGHO6ajUTHcPzC2Ny+qlvMg3Ls1O1ubR0c8v9S0', '5OPHyQVigUKgFU72UXlLWmNeKh9OokM0mIM9SlNi', 'YmAIIt0nMDpFElr60aaOaTreZ1lcrZr8NZ9hl8Iu', '1VqZDVkCooexvNqWK8Tgciq5j4IhbZUBWrCWhnuO', 'uMpjC5fPbbFRiaG2pyrGUI10UEwbvqc36rQAaHco', '0IM6Lh+HyRv/n2IIjUtbwWdyOm6CQYZDub5+Rn7K', 'nmdwFaO7XE7IZv7CIxGbyaF1AIZdBluFeLd3o7hQ', 'AIW9Cxxyuw6b3ymKHNiy9q95ocp16tNvbwJNs/yJ', 'yPECGt1xOt1qmxCCGSpQDCmtUM4i6ZN21YKX+Cgo', 'IPlyx7DA28qGCpBjVyGFTd/DVGy1orP74u6cfbBA', 'gZufz1VMQV2EY+6F2YNj67IbREtC2rHOhhMWj0MF', 'NGmVT9RKNT4igiLwIMfBjIAjdy/VrcNJdyAnZeHm', 'ddfMfCYsflBjDwMKTZyUKGW0jciYlDx3W3KPiLyC', 'AToYgp9uYfdeNaTC9diijvrziSajNzIoRKPHNKNF', '7MsmRRoa1hnfVEAL+p7yuEP5k7Hh3A0eqR7kJtRZ', 'FwNvxEnNcNR3420Tq5B9MRZtK7L9UlM1nbdKtLh0', '23N2E/hzsXFcOpN3XK7azW9exAmUJwOBezWTWU9j', 'yQkxko+/h4EnlpYvljtCZwjKHXN0mktB6o3jqYAN', 'i7E7+ef743Cne2zDDKxp796E+/KwFOT9bO4W6f/C', 'Omng8Mb4jP3R9uHoFA4ALQ19P9rYf5iax2sWmjrM', 'IDUEJj2DHhKsdhiqMdgEkuiUZc+9YjaPa13IembT', 'nORWXtMwYb3WvR8hao0B2ytCWUjAW9lxnYq1CqM7', 'k/Cb2c4SXN2GdcIWvV247lKoW0yuadIARxKXa4+j', '2Exqn2/rFalPLXT7uw/xHikyRj+3K7aC/RaH6wNQ', '9KkWu4px43/QsVYtUOh7xutcaDLlneRX0WxREFvM', '37NzC29+nfkbhFtb26hBe7H6AmWug9U+LSzWY3nC', 'Jr9jO7yqABv4wrcwol7MJO6nEBgPsd5XTAlbK0b5', '26KcFJRO3IDYBA8+vE2ux0MfTq2XVES8bFUiqGnu', 'CLqO/FHysTyMFCPv+ebkr4gZNsIj2PEIYbJhvcQM', 'LOgycfG9hZ21xKuNUH7SaI8l+dUjhzG8r2T3B5dX', 'MLTQatSA0vNucThcvU3uwRfE+1NjBt2vMrGhvSDt', 'pNH47DWpCRyNUDZ76Rv/AN0cjynOfb+4rW4sJbuf', '/OcP2eZiLxEHr4KieE8BxfgS1xBTURE+U5ab+NJr', 'xF9k2Irw0pKRdqf0zXjuzOGzmj38Ti/LhoVkamDD', 'ALVdeeqy+hOxIm9p+L3uqzqXuDlXnQ60btV6gANG', 'XZERNKSotSA+3h8iHlRowz3XsxQ5KI3qo/9P9LX2', 'Kjr+iGChv+hI6/oAmtkYtfiPU06F1eYQwA4zLL29', 'tnRZZcZkGTlUHfEYh+prn1nUc4ZKiH14DaFVTIZH', 'us+BBHDb/Z2jHM0ZQqcRZnpLBbqqd4pCBzovvaje', 'HL6ApNzt6sjIdOzr8v6gbO4IRh7gb1tJ+Hz+Mte1', 'Lck9mrkgu6a0eUymsWkpx6Tbx6vDk1AMH0ZfgnuY', 'uSRQUwccBpJXUI8gO4XgJg1KNHxtb+AQ92Md+uh2', 'rawoe9GESJN+ffRQ07DlyCYrfdi2S6ZYqdlbh04T', 'b+77E7qyTyLP1fina6aiHNkli17si5DoGB0H3bmH', 'xroZxOZiFNXWge0qo5mkIhVXmMYlP3gFv0CMKoij', 'kDvjxVIKDSb7FF8VY21FL2Y/R5cXv66E+DNgxOx2', 'SKRmaStkaWVP/4kmCHXbdDU+Whk0SImJxAO/1Mdy', 'engUo35jqAkDY4xkY1hDVAY8WjNLcekkxOLU98tt', 'gdQFI008v/UGAUfBRUhCQIWsqBXjfxW0KzeaT0Hg', 'xdjdar74XFNCZwRTMpIavKWlXvZkQJC1DhUuIWLL', 'fkJi50luk4TCxT5YVeaRKLp7VjeUzx+6W/AhELBf', 'EOST7D353jxuAgqAD6geLChp2R4MNJT760qLEs38', '38WP+zPSUlGQoJGgfsDj11HWGNWW5gQ78d64u7fH', 'YoPO2vsOi05yZxMDvFPnZFO2KJZEvDvTgQU5iY56', 'YkVJm13KyroryNjE7NbhAhq7PAkW5LnIzEBWgwOe', 'ULLGRTUhQrtohqfdjIguzSq+2UORB0SHCFMV4GHu', 'LNDFeRI='].join('');
-        const _fxwYVCxl = Uint8Array.from(atob(_wipyWmZJ), c => c.charCodeAt(0));
-        const _FJkzbKBT = [52, 219, 156, 132, 228];
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary mb-4 shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary fs-4" href="#">𓍯𓂃𓏧 NgChien</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center my-4">
+            <div class="col-12 col-xl-8">
+                <div class="dark-card p-4 mb-4 text-center position-relative" id="profile-container">
+                    <!-- Dữ liệu sẽ được Supabase load tự động điền vào đây -->
+                    <div class="text-secondary py-5">Đang tải dữ liệu từ cơ sở dữ liệu...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cấu hình kết nối Supabase của lǎogōng
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; // Thay URL của lǎogōng vào đây
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Thay Anon Key của lǎogōng vào đây
         
-        for (let i = 0; i < _FJkzbKBT.length; i++) {
-            const k = _FJkzbKBT[i];
-            for (let j = 0; j < _fxwYVCxl.length; j++) {
-                _fxwYVCxl[j] = _fxwYVCxl[j] ^ k;
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        async function loadProfile() {
+            try {
+                // Lấy profile đầu tiên từ bảng profiles (hoặc lọc theo ID/Username)
+                let { data, error } = await supabaseClient
+                    .from('profiles')
+                    .select('*')
+                    .limit(1)
+                    .single();
+
+                if (error || !data) {
+                    document.getElementById('profile-container').innerHTML = '<p class="text-danger">Không thể tải thông tin profile từ Supabase!</p>';
+                    return;
+                }
+
+                // Xử lý tạo HTML cho nhiều ảnh bên trái (nếu có mảng left_images)
+                let leftHtml = '';
+                if (data.left_images && data.left_images.length > 0) {
+                    data.left_images.forEach((imgUrl, index) => {
+                        // Tính toán độ nghiêng lệch nhẹ nếu có nhiều ảnh để xếp lớp nghệ thuật
+                        let rotateDeg = -12 - (index * 4);
+                        leftHtml += `<img src="${imgUrl}" alt="Left Image" class="profile-side-item" style="transform: rotate(${rotateDeg}deg); z-index: ${index + 1};">`;
+                    });
+                }
+
+                // Xử lý tạo HTML cho nhiều ảnh bên phải (nếu có mảng right_images)
+                let rightHtml = '';
+                if (data.right_images && data.right_images.length > 0) {
+                    data.right_images.forEach((imgUrl, index) => {
+                        let rotateDeg = 12 + (index * 4);
+                        rightHtml += `<img src="${imgUrl}" alt="Right Image" class="profile-side-item" style="transform: rotate(${rotateDeg}deg); z-index: ${index + 1};">`;
+                    });
+                }
+
+                // Đổ toàn bộ dữ liệu vào khung giao diện
+                const container = document.getElementById('profile-container');
+                container.innerHTML = `
+                    <button class="btn btn-sm text-secondary position-absolute top-0 end-0 m-3 rounded-circle border-0" style="background: rgba(255,255,255,0.05); z-index: 10;">
+                        <i class="bi bi-share-fill"></i>
+                    </button>
+
+                    <div class="profile-art-wrapper my-2">
+                        <div class="profile-side-left-container">${leftHtml}</div>
+                        <img src="${data.center_image_url}" alt="Main Character" class="profile-center-img">
+                        <div class="profile-side-right-container">${rightHtml}</div>
+                    </div>
+
+                    <h3 class="fw-bold text-warning fst-italic mt-3 mb-1 d-flex align-items-center justify-content-center gap-1" style="position: relative; z-index: 5;">
+                        ${data.display_name} 
+                        <i class="bi bi-patch-check-fill text-warning fs-5" title="Xác minh"></i>
+                    </h3>
+
+                    <div class="d-flex justify-content-center gap-2 mt-3" style="position: relative; z-index: 5;">
+                        <a href="${data.tiktok_url || '#'}" target="_blank" class="btn-social"><i class="bi bi-tiktok"></i> TikTok</a>
+                        <a href="${data.facebook_url || '#'}" target="_blank" class="btn-social"><i class="bi bi-facebook"></i> Facebook</a>
+                        <a href="${data.chat_url || '#'}" class="btn-social"><i class="bi bi-chat-dots-fill"></i> Chat</a>
+                    </div>
+                `;
+            } catch (err) {
+                console.error('Lỗi tải profile:', err);
             }
         }
-        
-        const ds = new DecompressionStream('deflate');
-        const writer = ds.writable.getWriter();
-        writer.write(_fxwYVCxl);
-        writer.close();
-        
-        const response = new Response(ds.readable);
-        const htmlText = await response.text();
-        
-        document.open();
-        document.write(htmlText);
-        document.close();
-    } catch (e) {
-        document.body.innerHTML = "<h2 style='text-align:center; margin-top:20vh; font-family:sans-serif;'>🔒 Access Denied</h2>";
-    }
-})();
-</script>
+
+        // Chạy hàm load khi trang mở lên
+        loadProfile();
+    </script>
 </body>
 </html>
