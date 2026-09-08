@@ -1,2 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Protected Page</title>
+</head>
+<body>
+<script>
+// --- Lớp mã rác đánh lạc hướng ---
+function _zXyWqAsd(a, b) { return (a * 31 + b) % 256; }
+function _mNopQrSt() { 
+    let _dummy = []; 
+    for(let i=0; i<20; i++) _dummy.push(_zXyWqAsd(i, i));
+    return _dummy;
+}
 
-Profile Ngdacchien
+(async function() {
+    try {
+        _mNopQrSt();
+        // --- Ghép nối mảnh Base64 ngầm ---
+        const _aBcDeFgH = "eJzVll1v2jgQx9/9K0y9sNjiuMkk22n77KZt".split("").join("") + "l8vtlP66jVpG3b1kRjZ2a0t/Hl".split("").join("") + "2O8Pz7O2cI3m9wE...[cắt gọn phần dài]...==";
+        
+        // --- Giải mã Base64 sang Binary ---
+        const _iJkLmNoP = Uint8Array.from(atob(_aBcDeFgH), c => c.charCodeAt(0));
+        
+        // --- Giải mã đa lớp XOR (5 lớp cực sâu) ---
+        const _qRsTuVwX = [142, 53, 210, 88, 19];
+        for (let i = 0; i < _qRsTuVwX.length; i++) {
+            const k = _qRsTuVwX[i];
+            for (let j = 0; j < _iJkLmNoP.length; j++) {
+                _iJkLmNoP[j] = _iJkLmNoP[j] ^ k;
+            }
+        }
+        
+        // --- Giải nén Deflate & Hiển thị Web ---
+        const ds = new DecompressionStream('deflate');
+        const writer = ds.writable.getWriter();
+        writer.write(_iJkLmNoP);
+        writer.close();
+        
+        const response = new Response(ds.readable);
+        const htmlText = await response.text();
+        
+        document.open();
+        document.write(htmlText);
+        document.close();
+    } catch (e) {
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:20vh; font-family:sans-serif;'>🔒 Access Denied</h2>";
+    }
+})();
+</script>
+</body>
+</html>
