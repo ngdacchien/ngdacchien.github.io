@@ -1,162 +1,47 @@
 <!DOCTYPE html>
-<html lang="vi" class="dark">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NgChien - Final Profile Layout</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-        body {
-            background-color: #0b0e14 !important;
-            color: #e2e8f0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            margin: 0;
-            padding-bottom: 40px;
-        }
-
-        .dark-card {
-            background-color: #141821 !important;
-            border: 1px solid rgba(255, 255, 255, 0.08) !important;
-            border-radius: 16px !important;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-social {
-            background-color: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #cbd5e1;
-            border-radius: 50rem;
-            padding: 6px 16px;
-            font-size: 0.825rem;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-        .btn-social:hover {
-            background-color: rgba(255, 255, 255, 0.15);
-            color: #fff;
-        }
-
-        /* ================= KHUNG PROFILE ART ĐỘC ĐÁO ================= */
-        .profile-art-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 520px;
-            height: 420px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Ảnh profile nghiêng bên trái (Ảnh 2) */
-        .profile-side-left {
-            position: absolute;
-            left: 10px;
-            top: 20px;
-            width: 180px;
-            height: 290px;
-            object-fit: cover;
-            border-radius: 16px;
-            transform: rotate(-12deg);
-            z-index: 1;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            filter: brightness(0.9);
-        }
-
-        /* Ảnh nhân vật chính ở giữa (Ảnh 1 - tách nền) */
-        .profile-center-img {
-            position: absolute;
-            width: 220px;
-            height: auto;
-            max-height: 380px;
-            object-fit: contain;
-            z-index: 3;
-            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.95));
-        }
-
-        /* Ảnh profile nghiêng bên phải (Ảnh 3) */
-        .profile-side-right {
-            position: absolute;
-            right: 10px;
-            top: 20px;
-            width: 180px;
-            height: 290px;
-            object-fit: cover;
-            border-radius: 16px;
-            transform: rotate(12deg);
-            z-index: 1;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            filter: brightness(0.9);
-        }
-
-        .profile-username-banner {
-            position: absolute;
-            bottom: 10px;
-            z-index: 4;
-            background: rgba(230, 235, 240, 0.92);
-            border: 2px dashed rgba(120, 130, 140, 0.4);
-            padding: 6px 36px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
-            transform: rotate(-1deg);
-        }
-
-        .profile-username-text {
-            color: #ef4444;
-            font-size: 20px;
-            font-weight: 900;
-            letter-spacing: 1px;
-            font-style: italic;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Protected Page</title>
 </head>
 <body>
+<script>
+function _UQzIUciC(a, b) { return (a * 31 + b) % 256; }
+function _VBVWYbtI() { 
+    let _dummy = []; 
+    for(let i=0; i<20; i++) _dummy.push(_UQzIUciC(i, i));
+    return _dummy;
+}
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary mb-4 shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold text-primary fs-4" href="#">𓍯𓂃𓏧 NgChien</a>
-            <div class="d-flex align-items-center">
-                <a href="#" class="btn btn-outline-light btn-sm me-2 rounded-pill px-3">Đăng nhập</a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
-        <div class="row justify-content-center my-4">
-            <div class="col-12 col-xl-8">
-
-                <div class="dark-card p-4 mb-4 text-center position-relative">
-                    <button class="btn btn-sm text-secondary position-absolute top-0 end-0 m-3 rounded-circle border-0" style="background: rgba(255,255,255,0.05); z-index: 10;">
-                        <i class="bi bi-share-fill"></i>
-                    </button>
-
-                    <div class="profile-art-wrapper my-2">
-                        <img src="image_10b4a9.jpg" alt="Profile Left" class="profile-side-left">
-                        <img src="image-removebg-preview.png" alt="Main Character" class="profile-center-img">
-                        <img src="image_10b4a8.jpg" alt="Profile Right" class="profile-side-right">
-
-                    </div>
-
-                    <h3 class="fw-bold text-warning fst-italic mt-3 mb-1 d-flex align-items-center justify-content-center gap-1" style="position: relative; z-index: 5;">
-                        Admin 
-                        <i class="bi bi-patch-check-fill text-warning fs-5" title="Xác minh Admin"></i>
-                    </h3>
-
-                    <div class="d-flex justify-content-center gap-2 mt-3" style="position: relative; z-index: 5;">
-                        <a href="#" class="btn-social"><i class="bi bi-tiktok"></i> TikTok</a>
-                        <a href="#" class="btn-social"><i class="bi bi-facebook"></i> Facebook</a>
-                        <a href="#" class="btn-social"><i class="bi bi-chat-dots-fill"></i> Chat</a>
-                    </div>
-                </div>
-                </div>
-        </div>
-    </div>
-
+(async function() {
+    try {
+        _VBVWYbtI();
+        const _aVMOdISx = ['zW9o7Xg7bvOnC06cj7mjrLDbPxER9Zb+NrH7Ka0u', 'OLhajW2ImC/RJtm6bPjBQv2vss59UwlttQtRo22M', 'maV1fWiLO+rRa3U6BWBJJvEkrzqCIujU86HsaOjo', '6sjg6HBMsiqKDc5PYjLqFfHSXHwYDAwVIUXN1Jgs', 'MDchnQAF95d6mZYQkYkMMFWGeh2Tnf094eGaGXIS', 'QkVhb6PEJ+QGs+hQ99/t/MX4jLnoBOWSPiWb7PXE', 'xMauhHuBlpzjtPxcdwAoz5x4wf/6CzxakznHMWSI', 'c/w/q/+kBCEXGnwwjWJG1IwfKSSHyzOn/BYwIN0o', 'HmzFrTFpyxf3LwcQAYxg9ivS9uq9GAGRTBKmztGO', 'diWciLkhb71ZOcSuK+39Z8HUnMgk5yDlHxjY4Nhs', 'OMHWswUd+uhuwFhkhbc9bwfTpiD7oP0j3hHRBR72', 'piMbrbrUHag9eY8sun4UUAnfB2zTTHXJyaTrFVov', 'blekvHvXnHvMPbYkv4z2qo8L9miETzXQcyQxXo6O', 'hl/UYRZmfWwgrDbF8Ycj63ll8soTBBVdREg62xbm', 'Jz05afPq5/sixUgjfyXFTRS94u3kfBdoILWwKeWj', 'ks8z6XLsk5iEJIRWhmFnKiaF0YlzC2Xv0YaBw0dA', '03Fq2oCK2PbFqaWs6zoyjsMSK24+MprR/dQpLhok', 'p5y+JDnIx1H4kwJkU34EKFxVL4AFkZSO4gVhkgXj', 'Sm2A47y8cL958uatXDhUHuVfNRdHequ4D7hCgHL/', 'saXJYu9r1nLRRcu1DTbbl7DLjRRb9PWTOxHsEh7S', 'fdXQtV7VF9f6nDXR+gh8a8n4Yq8ygaUn3ZM1/+nF', 'b6+XNCkZISeBMDCJMJ3kwa5su9XSPO3nTCtFDyar', 'LRedX0FdRdYB3cplqgrPSXgiXVQWskJbykiwT1lk', 'nM9GVmBeKlt3UEdOsqimi6vbmXx+2T48Yc2wPJxq', 'hpOigJsluLQK0L4Ml36iNE4yw2kbxJApzftu3MB1', 'OkLw+HWWxxtwG7mHzCunfY3k/+5m/X/XOywTrAWd', 'NVY9f2i0+nsg02SwG/seSPQO/eoIz3Sm4bQxzSkF', 'furMOclNsw/pi9JdHalXuI+U4JkRjRAkW7AhTaX2', 'Ug+wHSzXRdl2F/CL9k7dYE36zpRDO0Lxd8r3tv1q', 'eRXVrcnYO1+9Iv39fQ7n3RdcpMMIJXOYi4pwxd9k', 'gBnFnRoMpr1eZBGWBPhqgkgBtr6pF3jx6q/9jeBf', 'fQQ6sjLoeiZ+oqmYGusIYeW56Asx8uIayvOEDs9I', 'rhwoWvdUF5oqsoVJX0BCCS6/kGSFfleuxxTHG2Kq', 'ik6U11cbIzsTYg0r9th0zimDX3OFIZcaCcJRoTHx', 'lhJ2zHImdFXI1576G+tIZ7FiXfXFoHsJlBcHG4ZL', 'AndeSpMPr7or9pDdT71Zpnu6KY9o2xkeC8iKgx05', 'WkGpf0DEibehCSQE3umnY160cbb197eY9TA9XnTN', 'YvnCfixWdDQ30AFSa95IakcVPJta6IltICPCzMZl', 'phP730wUXLUXhMnPXhtIDZwxHp/xO6gSyHPcJqXg', '+ze3kgIOE4aYeLmEuPLOZZtxFbKfjitMBVnpUhNQ', 'jJxYLsYHGU7uTVymPH++E14p9egjc0C2ZqiVihsb', 'ENL/w2DCv5/yu1e+IUzNOf9y1SDsLtveqwfz6iDh', 'HGknotZ9WzsFumu/5AG3wNztoxwM0SzkoZyJGw54', 'uhgmAnpLTG5u0kpNVFgGykiu4LhGyf3vXtpYlHET', 'i2+bPB+GHQAS3+oAF8+PYQJ9YQ1lNfaqueD5JN0+', 'H4L29aG6oDTx9imGnSNGgKvsktrLyUa2UcW7XE7Q', 'CwqO3Xci7jXY21L2dRZDboCN234Q7QD+D3/9Iei1', 'yUhdtRwU6YRpc14BzQAEun+DLfhKLTZOvruhex8h', 'YBy/YkDEsnNwJ0uMBT8ChLPxPmCDmd6jGeYqjC4F', 'Np1FY/Ssq4BdsvmzxcvjicCZ4TGxGQgiXpXGYkrQ', '7gLAz43Cz8PpWS+ArtN90pOY/L+S7i8vYqUZcmHU', '3N6yBdjFDq+lxSrCxf7l8qCa/JXt10+CYkRyUW3L', 'J3KjheuaGVOgp+Fn4+7k5iMKDrNF2bMSjZE86edG', 'Y357zBhe+vXkwaL1lDS8GgMD+FDC5jYTqLOIh8Rt', '2OTEQe/INSJkY5j+80A3jhzd8JEyabkc/VaHthb5', 'tkI1SptfeJrIpKwmqQ64io7Pf7iqkjJdTewttGta', 'eWMpXZV09Pc2BjcG2GZFcfdwvnMwQKKdV3geHRFh', 'xCVofF2oLejUwbWlGvVBwvUQjjDiGp11J6OfLyjc', 'xOPvPftsbByNbn5iSnBHpLwdmq+wQh9uaubwJaU4', '9hRg45OH5B3OIAF7Ki6Ia4wYf+U3oeIhrvWzRsdI', 'inZj37Q='].join('');
+        const _mrvgcHea = Uint8Array.from(atob(_aVMOdISx), c => c.charCodeAt(0));
+        const _gzumwkXh = [154, 81, 156, 201, 43];
+        
+        for (let i = 0; i < _gzumwkXh.length; i++) {
+            const k = _gzumwkXh[i];
+            for (let j = 0; j < _mrvgcHea.length; j++) {
+                _mrvgcHea[j] = _mrvgcHea[j] ^ k;
+            }
+        }
+        
+        const ds = new DecompressionStream('deflate');
+        const writer = ds.writable.getWriter();
+        writer.write(_mrvgcHea);
+        writer.close();
+        
+        const response = new Response(ds.readable);
+        const htmlText = await response.text();
+        
+        document.open();
+        document.write(htmlText);
+        document.close();
+    } catch (e) {
+        document.body.innerHTML = "<h2 style='text-align:center; margin-top:20vh; font-family:sans-serif;'>🔒 Access Denied</h2>";
+    }
+})();
+</script>
 </body>
 </html>
