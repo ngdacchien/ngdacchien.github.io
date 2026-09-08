@@ -1,21 +1,162 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="dark">
 <head>
     <meta charset="UTF-8">
-    <title>Hồ Sơ Cá Nhân</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NgChien - Final Profile Layout</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
-        body { font-family: Arial, sans-serif; background: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .card { background: #1e293b; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; width: 350px; }
-        h2 { color: #38bdf8; margin-bottom: 5px; }
-        p { color: #94a3b8; font-size: 14px; }
-        .badge { display: inline-block; background: #0284c7; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; margin-top: 15px; }
+        body {
+            background-color: #0b0e14 !important;
+            color: #e2e8f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            margin: 0;
+            padding-bottom: 40px;
+        }
+
+        .dark-card {
+            background-color: #141821 !important;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            border-radius: 16px !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-social {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #cbd5e1;
+            border-radius: 50rem;
+            padding: 6px 16px;
+            font-size: 0.825rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .btn-social:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        /* ================= KHUNG PROFILE ART ĐỘC ĐÁO ================= */
+        .profile-art-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 520px;
+            height: 420px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Ảnh profile nghiêng bên trái (Ảnh 2) */
+        .profile-side-left {
+            position: absolute;
+            left: 10px;
+            top: 20px;
+            width: 180px;
+            height: 290px;
+            object-fit: cover;
+            border-radius: 16px;
+            transform: rotate(-12deg);
+            z-index: 1;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            filter: brightness(0.9);
+        }
+
+        /* Ảnh nhân vật chính ở giữa (Ảnh 1 - tách nền) */
+        .profile-center-img {
+            position: absolute;
+            width: 220px;
+            height: auto;
+            max-height: 380px;
+            object-fit: contain;
+            z-index: 3;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.95));
+        }
+
+        /* Ảnh profile nghiêng bên phải (Ảnh 3) */
+        .profile-side-right {
+            position: absolute;
+            right: 10px;
+            top: 20px;
+            width: 180px;
+            height: 290px;
+            object-fit: cover;
+            border-radius: 16px;
+            transform: rotate(12deg);
+            z-index: 1;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            filter: brightness(0.9);
+        }
+
+        .profile-username-banner {
+            position: absolute;
+            bottom: 10px;
+            z-index: 4;
+            background: rgba(230, 235, 240, 0.92);
+            border: 2px dashed rgba(120, 130, 140, 0.4);
+            padding: 6px 36px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+            transform: rotate(-1deg);
+        }
+
+        .profile-username-text {
+            color: #ef4444;
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>Ngô Đắc Chiến</h2>
-        <p>Full-stack Developer & Tech Enthusiast</p>
-        <div class="badge">Đang hoạt động</div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-secondary mb-4 shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary fs-4" href="#">𓍯𓂃𓏧 NgChien</a>
+            <div class="d-flex align-items-center">
+                <a href="#" class="btn btn-outline-light btn-sm me-2 rounded-pill px-3">Đăng nhập</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center my-4">
+            <div class="col-12 col-xl-8">
+
+                <div class="dark-card p-4 mb-4 text-center position-relative">
+                    <button class="btn btn-sm text-secondary position-absolute top-0 end-0 m-3 rounded-circle border-0" style="background: rgba(255,255,255,0.05); z-index: 10;">
+                        <i class="bi bi-share-fill"></i>
+                    </button>
+
+                    <div class="profile-art-wrapper my-2">
+                        <img src="image_10b4a9.jpg" alt="Profile Left" class="profile-side-left">
+                        <img src="image-removebg-preview.png" alt="Main Character" class="profile-center-img">
+                        <img src="image_10b4a8.jpg" alt="Profile Right" class="profile-side-right">
+
+                    </div>
+
+                    <h3 class="fw-bold text-warning fst-italic mt-3 mb-1 d-flex align-items-center justify-content-center gap-1" style="position: relative; z-index: 5;">
+                        Admin 
+                        <i class="bi bi-patch-check-fill text-warning fs-5" title="Xác minh Admin"></i>
+                    </h3>
+
+                    <div class="d-flex justify-content-center gap-2 mt-3" style="position: relative; z-index: 5;">
+                        <a href="#" class="btn-social"><i class="bi bi-tiktok"></i> TikTok</a>
+                        <a href="#" class="btn-social"><i class="bi bi-facebook"></i> Facebook</a>
+                        <a href="#" class="btn-social"><i class="bi bi-chat-dots-fill"></i> Chat</a>
+                    </div>
+                </div>
+                </div>
+        </div>
     </div>
+
 </body>
 </html>
