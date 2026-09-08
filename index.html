@@ -1,53 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-<meta charset="UTF-8">
-<title>Protected Page</title>
+    <meta charset="UTF-8">
+    <title>Hồ Sơ Cá Nhân</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #0f172a; color: #f8fafc; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: #1e293b; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); text-align: center; width: 350px; }
+        h2 { color: #38bdf8; margin-bottom: 5px; }
+        p { color: #94a3b8; font-size: 14px; }
+        .badge { display: inline-block; background: #0284c7; color: white; padding: 5px 12px; border-radius: 20px; font-size: 12px; margin-top: 15px; }
+    </style>
 </head>
 <body>
-<script>
-// --- Lớp mã rác đánh lạc hướng ---
-function _zXyWqAsd(a, b) { return (a * 31 + b) % 256; }
-function _mNopQrSt() { 
-    let _dummy = []; 
-    for(let i=0; i<20; i++) _dummy.push(_zXyWqAsd(i, i));
-    return _dummy;
-}
-
-(async function() {
-    try {
-        _mNopQrSt();
-        // --- Ghép nối mảnh Base64 ngầm ---
-        const _aBcDeFgH = "eJzVll1v2jgQx9/9K0y9sNjiuMkk22n77KZt".split("").join("") + "l8vtlP66jVpG3b1kRjZ2a0t/Hl".split("").join("") + "2O8Pz7O2cI3m9wE...[cắt gọn phần dài]...==";
-        
-        // --- Giải mã Base64 sang Binary ---
-        const _iJkLmNoP = Uint8Array.from(atob(_aBcDeFgH), c => c.charCodeAt(0));
-        
-        // --- Giải mã đa lớp XOR (5 lớp cực sâu) ---
-        const _qRsTuVwX = [142, 53, 210, 88, 19];
-        for (let i = 0; i < _qRsTuVwX.length; i++) {
-            const k = _qRsTuVwX[i];
-            for (let j = 0; j < _iJkLmNoP.length; j++) {
-                _iJkLmNoP[j] = _iJkLmNoP[j] ^ k;
-            }
-        }
-        
-        // --- Giải nén Deflate & Hiển thị Web ---
-        const ds = new DecompressionStream('deflate');
-        const writer = ds.writable.getWriter();
-        writer.write(_iJkLmNoP);
-        writer.close();
-        
-        const response = new Response(ds.readable);
-        const htmlText = await response.text();
-        
-        document.open();
-        document.write(htmlText);
-        document.close();
-    } catch (e) {
-        document.body.innerHTML = "<h2 style='text-align:center; margin-top:20vh; font-family:sans-serif;'>🔒 Access Denied</h2>";
-    }
-})();
-</script>
+    <div class="card">
+        <h2>Ngô Đắc Chiến</h2>
+        <p>Full-stack Developer & Tech Enthusiast</p>
+        <div class="badge">Đang hoạt động</div>
+    </div>
 </body>
 </html>
