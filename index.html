@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NgChien - Dynamic Profile from Supabase</title>
+    <title>NgChien - Dynamic Profile</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Thư viện Supabase JS -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
@@ -53,7 +52,6 @@
             justify-content: center;
         }
 
-        /* Ảnh nhân vật chính ở giữa */
         .profile-center-img {
             position: absolute;
             width: 220px;
@@ -64,7 +62,6 @@
             filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.95));
         }
 
-        /* Container chứa các ảnh trái/phải linh hoạt (có thể lặp nhiều ảnh) */
         .profile-side-left-container, .profile-side-right-container {
             position: absolute;
             top: 20px;
@@ -75,6 +72,7 @@
         .profile-side-left-container { left: 10px; }
         .profile-side-right-container { right: 10px; }
 
+        /* Style chung cho ảnh và khung trống (placeholder) */
         .profile-side-item {
             position: absolute;
             width: 100%;
@@ -84,6 +82,16 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.15);
             filter: brightness(0.9);
+            background-color: rgba(255, 255, 255, 0.03); /* Màu nền nhẹ cho khung trống */
+        }
+        
+        /* Hiệu ứng khi khung trống hiển thị */
+        .profile-side-item.empty-slot {
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.2);
         }
     </style>
 </head>
@@ -99,23 +107,20 @@
         <div class="row justify-content-center my-4">
             <div class="col-12 col-xl-8">
                 <div class="dark-card p-4 mb-4 text-center position-relative" id="profile-container">
-                    <!-- Dữ liệu sẽ được Supabase load tự động điền vào đây -->
-                    <div class="text-secondary py-5">Đang tải dữ liệu từ cơ sở dữ liệu...</div>
+                    <div class="text-secondary py-5">Đang tải dữ liệu...</div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Cấu hình kết nối Supabase của lǎogōng
-        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; // Thay URL của lǎogōng vào đây
-        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; // Thay Anon Key của lǎogōng vào đây
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL'; 
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY'; 
         
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         async function loadProfile() {
             try {
-                // Lấy profile đầu tiên từ bảng profiles (hoặc lọc theo ID/Username)
                 let { data, error } = await supabaseClient
                     .from('profiles')
                     .select('*')
@@ -123,30 +128,34 @@
                     .single();
 
                 if (error || !data) {
-                    document.getElementById('profile-container').innerHTML = '<p class="text-danger">Không thể tải thông tin profile từ Supabase!</p>';
+                    document.getElementById('profile-container').innerHTML = '<p class="text-danger">Không thể tải dữ liệu profile!</p>';
                     return;
                 }
 
-                // Xử lý tạo HTML cho nhiều ảnh bên trái (nếu có mảng left_images)
+                // Xử lý mảng ảnh trái (nếu mảng rỗng thì tự sinh 1 khung trống)
+                let leftImages = (data.left_images && data.left_images.length > 0) ? data.left_images : [''];
                 let leftHtml = '';
-                if (data.left_images && data.left_images.length > 0) {
-                    data.left_images.forEach((imgUrl, index) => {
-                        // Tính toán độ nghiêng lệch nhẹ nếu có nhiều ảnh để xếp lớp nghệ thuật
-                        let rotateDeg = -12 - (index * 4);
+                leftImages.forEach((imgUrl, index) => {
+                    let rotateDeg = -12 - (index * 4);
+                    if (imgUrl) {
                         leftHtml += `<img src="${imgUrl}" alt="Left Image" class="profile-side-item" style="transform: rotate(${rotateDeg}deg); z-index: ${index + 1};">`;
-                    });
-                }
+                    } else {
+                        leftHtml += `<div class="profile-side-item empty-slot" style="transform: rotate(${rotateDeg}deg); z-index: ${index + 1};"><i class="bi bi-image fs-3"></i></div>`;
+                    }
+                });
 
-                // Xử lý tạo HTML cho nhiều ảnh bên phải (nếu có mảng right_images)
+                // Xử lý mảng ảnh phải (nếu mảng rỗng thì tự sinh 1 khung trống)
+                let rightImages = (data.right_images && data.right_images.length > 0) ? data.right_images : [''];
                 let rightHtml = '';
-                if (data.right_images && data.right_images.length > 0) {
-                    data.right_images.forEach((imgUrl, index) => {
-                        let rotateDeg = 12 + (index * 4);
+                rightImages.forEach((imgUrl, index) => {
+                    let rotateDeg = 12 + (index * 4);
+                    if (imgUrl) {
                         rightHtml += `<img src="${imgUrl}" alt="Right Image" class="profile-side-item" style="transform: rotate(${rotateDeg}deg); z-index: ${index + 1};">`;
-                    });
-                }
+                    } else {
+                        rightHtml += `<div class="profile-side-item empty-slot" style="transform: rotate(${rotateDeg}deg); z-index: ${index + 1};"><i class="bi bi-image fs-3"></i></div>`;
+                    }
+                });
 
-                // Đổ toàn bộ dữ liệu vào khung giao diện
                 const container = document.getElementById('profile-container');
                 container.innerHTML = `
                     <button class="btn btn-sm text-secondary position-absolute top-0 end-0 m-3 rounded-circle border-0" style="background: rgba(255,255,255,0.05); z-index: 10;">
@@ -155,7 +164,7 @@
 
                     <div class="profile-art-wrapper my-2">
                         <div class="profile-side-left-container">${leftHtml}</div>
-                        <img src="${data.center_image_url}" alt="Main Character" class="profile-center-img">
+                        <img src="${data.center_image_url || ''}" alt="Main Character" class="profile-center-img">
                         <div class="profile-side-right-container">${rightHtml}</div>
                     </div>
 
@@ -175,7 +184,6 @@
             }
         }
 
-        // Chạy hàm load khi trang mở lên
         loadProfile();
     </script>
 </body>
